@@ -1,75 +1,82 @@
-Player Re-Identification and Tracking
-This project performs player detection, tracking, and Re-ID (Re-Identification) using a combination of YOLOv8 and Deep SORT. You provide a sports match video as input, and the system tracks individual players across frames and re-identifies them consistently using bounding boxes.
+🎯 Player Re-Identification and Tracking
+This project enables automatic player detection, tracking, and re-identification in sports videos using YOLOv8 for object detection and Deep SORT for multi-object tracking. The system processes a given match video and visually annotates each player with consistent ID-based bounding boxes throughout the video.
 
 📦 Dependencies
-To ensure smooth execution, install the following:
+To run the project smoothly, make sure the following libraries and tools are installed:
 
-Python 3.8 or later
+Python 3.8+
 
-OpenCV (opencv-python)
+OpenCV
 
 PyTorch
 
-Ultralytics YOLOv8 (ultralytics)
+Ultralytics (YOLOv8)
 
-Deep SORT Realtime (deep_sort_realtime)
+Deep SORT Realtime
 
 NumPy
 
 tqdm
 
-Install everything using:
+Install dependencies using the provided requirements.txt file.
 
-bash
-Copy
-Edit
-pip install -r requirements.txt
 ⚙️ Setup Instructions
-Clone or download this repository to your local machine.
+Clone or download the project repository to your local system.
 
-Place your input video in the project directory and name it (e.g., input.mp4).
+Place your input video file (e.g., a football or basketball match) in the root directory of the project.
 
-Run the script using:
+Ensure the file name is correctly referenced in the script (e.g., main.py) before execution.
 
-bash
-Copy
-Edit
-python main.py
-(Make sure your video path and file name are correctly referenced in main.py.)
+Run the main script to start the process.
 
-Output: A processed video is generated with bounding boxes tracking individual players (default name: reid_output.mp4). It will be saved in the output folder created automatically.
+Once the video is processed, a new output video will be generated with bounding boxes consistently tracking each player. The output is saved automatically in the output folder.
 
-📌 Notes
-The video should contain distinguishable players and consistent lighting for best tracking performance.
+📌 Important Notes
+Use high-quality, well-lit videos with distinguishable players for best results.
 
-Ensure CUDA is available for faster performance, or fallback to CPU (slower).
+CUDA-enabled GPU is recommended for faster processing; if not available, the system will use CPU (which is slower).
 
-Report (Methodology & Observations)
+Ensure model weights are downloaded correctly when using YOLOv8 for the first time.
+
+📄 Report: Methodology & Observations
 🎯 Objective
-Build an AI-powered video analysis system capable of tracking players across frames and assigning consistent IDs using re-identification logic.
+The goal is to build an AI-based system capable of tracking players and maintaining their identity across frames, even with fast movement, occlusion, or camera panning.
 
 🧠 Approach & Methodology
-Used YOLOv8 for fast and accurate object detection (players).
+YOLOv8 is used for detecting players in each frame due to its superior accuracy and speed.
 
-Integrated Deep SORT for robust real-time multi-object tracking with re-ID capability.
+Deep SORT assigns a unique ID to each player and maintains it across the video using appearance features and motion prediction.
 
-Frames are processed sequentially, and tracked players are assigned persistent IDs shown with bounding boxes.
+Each video frame is processed to draw bounding boxes with player IDs.
 
-The processed frames are compiled back into a final output video.
+All frames are finally compiled back into a single annotated output video.
 
-🔍 Techniques Tried & Outcomes
-YOLOv8 outperformed other detectors (like YOLOv5 or Haar cascades) in both speed and accuracy.
+🔍 Techniques Tried & Their Outcomes
+Compared YOLOv8 with earlier detectors like YOLOv5 and Haar cascades; YOLOv8 consistently showed higher frame rate and precision.
 
-Deep SORT provided reliable ID continuity even with partial occlusions and fast motion.
+Deep SORT’s re-ID mechanism worked well even under camera movement, occlusion, or overlapping players.
 
-⚠️ Challenges Faced
-Bounding boxes not appearing: Often due to incorrect video path or failure to load the model properly.
+Confidence thresholds and NMS (non-max suppression) settings were adjusted to reduce false positives.
 
-Frame skipping or lag: Happens when GPU is not available; fallback to CPU is significantly slower.
+⚠️ Challenges Encountered
+Bounding boxes not visible: Usually caused by incorrect video path or missing model weights.
 
-Players not detected: If the model’s confidence is low or the video quality is poor.
+Slow frame rate: On systems without GPU acceleration, CPU fallback results in significant delays.
 
-⏳ Incomplete / Next Steps
-Current system only uses default YOLOv8 weights. For better accuracy, custom training on player datasets would be ideal.
+Missed detections: Poor lighting or low resolution can cause YOLO to miss players or misidentify objects.
 
-Future additions could include: player statistics, heatmaps, pose estimation, or event detection (e.g., goals or fouls).
+⏳ Incomplete Tasks / Future Work
+The current version uses pre-trained YOLOv8 weights. Custom training on domain-specific player data could significantly boost accuracy.
+
+Potential extensions:
+
+Pose Estimation
+
+Player Heatmaps
+
+Event Detection (e.g., goals, offsides)
+
+Player Statistics Overlay
+
+Consider implementing GUI-based video upload and real-time processing dashboard in future iterations.
+
